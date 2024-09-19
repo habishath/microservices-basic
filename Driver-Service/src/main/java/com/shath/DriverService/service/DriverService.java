@@ -16,7 +16,7 @@ public class DriverService {
     @Autowired
     private final DriverRepository driverRepository;
 
-    public void addDriver(Driver driver){
+    public Boolean addDriver(Driver driver){
         List<Driver> existingDrivers = driverRepository.findAll();
 
         boolean driverExists = existingDrivers.stream()
@@ -27,7 +27,7 @@ public class DriverService {
             throw new RuntimeException("Driver with same details already exists");
         }
 
-        driverRepository.insertDriver(driver);
+        return driverRepository.insertDriver(driver);
     }
 
     public Driver getDriver(int id) {
@@ -45,7 +45,7 @@ public class DriverService {
 
     public void deleteDriver(int id) {
         Driver driver = driverRepository.getDriverById(id).orElseThrow(() -> new RuntimeException("Employee Not Found for id: " + id));
-        driverRepository.deleteDriver(driver);
+        driverRepository.deleteDriver(id);
     }
 
     public List<Driver> findDriversByLocation(String location) {

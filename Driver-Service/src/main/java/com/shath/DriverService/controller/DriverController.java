@@ -28,8 +28,10 @@ public class DriverController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createDriver(@Valid @RequestBody Driver driver){
-        driverService.addDriver(driver);
-        return "Driver has been added";
+        if(driverService.addDriver(driver)){
+            return "Driver has been added";
+        }
+        return "Driver has not been added";
     }
 
     @GetMapping("/view/{id}")
